@@ -1,0 +1,64 @@
+$ composer create-project --prefer-dist laravel/laravel applarareact
+$ cd applarareact
+$ create database in .env file
+$ php artisan migrate
+$ npm install
+$ npm install react@latest react-dom@latest
+$ npm i @vitejs/plugin-react
+$ npm i @vitejs/plugin-react-refresh
+include this in vite.config.js
+plugins: [
+        reactRefresh(),
+    ],
+
+make file App.jxs and import inside file app.js
+create id root tag div app.html
+$ npm run dev
+
+install laravel passport
+$ composer require laravel/passport
+$ php artisan migrate
+$ php artisan passport:install
+input this code in model  file User.php
+use Laravel\Passport\HasApiTokens;
+
+fill this is in file app/config.php
+'providers' => [
+        ...
+        ...
+        ...
+        Laravel\Passport\PassportServiceProvider::class,
+    ],
+
+fill this is in file config/auth.php
+<?php
+    return [
+    ....
+    ....
+
+        'guards' => [
+            'web' => [
+                'driver' => 'session',
+                'provider' => 'users',
+            ],
+
+            'api' => [
+                'driver' => 'passport',
+                'provider' => 'users',
+            ],
+        ],
+
+    ....
+    ....
+]
+
+use this for api url
+'headers' => [
+    'Accept' => 'application/json'
+]
+
+use this to access api url auth
+'headers' => [
+    'Accept' => 'application/json',
+    'Authorization' => 'Bearer '. $accessToken,
+]
