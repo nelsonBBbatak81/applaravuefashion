@@ -84,7 +84,7 @@ class AuthController extends BaseController
 
             $success['token'] =  $user->createToken('MyApp')-> accessToken;
 
-            $success['name'] =  $user->name;
+            $success['user'] = $user;
 
 
 

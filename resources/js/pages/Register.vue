@@ -5,7 +5,7 @@
                 <h1 class="text-xl font-bold text-center mb-">
                     Please Sign Up
                 </h1>
-                <form action="https://formbold.com/s/FORM_ID" method="POST">
+                <form @submit.prevent="submit">
                     <div class="mb-5">
                         <label
                             for="name"
@@ -17,6 +17,7 @@
                             type="text"
                             name="name"
                             id="name"
+                            v-model="form.name"
                             placeholder="Full Name"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
@@ -32,6 +33,7 @@
                             type="email"
                             name="email"
                             id="email"
+                            v-model="form.email"
                             placeholder="example@domain.com"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
@@ -47,6 +49,7 @@
                             type="password"
                             name="password"
                             id="password"
+                            v-model="form.password"
                             placeholder="Enter your password"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
@@ -62,6 +65,7 @@
                             type="password"
                             name="password_confirmation"
                             id="password_confirmation"
+                            v-model="form.c_password"
                             placeholder="Enter your password again"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
@@ -79,11 +83,41 @@
     </LayoutGuest>
 </template>
 <script>
+import axios from "axios";
 import LayoutGuest from "../layout/LayoutGuest.vue";
 
 export default {
+    data() {
+        return {
+            form: {
+                name: "",
+                email: "",
+                password: "",
+                c_password: "",
+            },
+        };
+    },
     components: {
         LayoutGuest,
+    },
+    methods: {
+        async submit() {
+            let data = {
+                name: this.form.name,
+                email: this.form.email,
+                password: this.form.password,
+                c_password: this.form.c_password,
+            };
+            console.log(data);
+            await axios
+                .post("/api/register", data)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
     },
 };
 </script>
